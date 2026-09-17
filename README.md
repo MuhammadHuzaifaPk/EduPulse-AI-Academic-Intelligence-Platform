@@ -9,6 +9,8 @@ Students face severe cognitive overload due to fragmented study workflows. Learn
 
 ---
 
+<img width="1278" height="624" alt="edu1" src="https://github.com/user-attachments/assets/814caab6-604e-44dd-9901-815721dab52c" />
+
 ## The Solution: EduPulse AI
 EduPulse AI is a unified, multi-model academic co-pilot engineered to transform raw educational resources into actionable knowledge. **Powered by an ensemble of Google Gemini API** (for complex reasoning, synthesis, and roadmap generation) and **Hugging Face Inference Models** (for specialized NLP, entity extraction, and fast local/cloud summarization), EduPulse AI provides:
 
@@ -38,6 +40,8 @@ The principal technical challenge was enforcing strict structural output integri
 Education Technology and Generative AI Track.
 
 ---
+
+<img width="1224" height="513" alt="edu2" src="https://github.com/user-attachments/assets/42d9c7c3-3e7b-4407-94bd-6644bd805f48" />
 
 ## Impact
 

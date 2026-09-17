@@ -1,0 +1,17 @@
+fastapi
+uvicorn
+pydantic
+pydantic-settings
+google-genai
+huggingface-hub
+transformers
+torch
+youtube-transcript-api
+pypdf
+pdfplumber
+python-multipart
+aiohttp
+jinja2
+requests
+python-dotenv
+google.generativeai

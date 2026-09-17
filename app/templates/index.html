@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduPulse AI — Next-Gen Academic Intelligence</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81'
+                        },
+                        darkbg: '#0f172a',
+                        cardbg: '#1e293b'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS Stylesheets -->
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="/static/css/animations.css">
+</head>
+<body class="bg-darkbg text-slate-100 font-['Plus_Jakarta_Sans'] min-h-screen flex flex-col antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- Top Navigation Header -->
+    <header class="sticky top-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Brand Logo -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('youtube')">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-400 flex items-center justify-center shadow-lg shadow-brand-500/20 glow-pulse">
+                        <i class="fa-solid fa-brain text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold font-['Outfit'] bg-clip-text text-transparent bg-gradient-to-r from-white via-indigo-200 to-brand-500">EduPulse AI</span>
+                        <span class="block text-[10px] text-indigo-400 font-medium tracking-wider uppercase">Academic Co-Pilot</span>
+                    </div>
+                </div>
+
+                <!-- Navigation Tabs -->
+                <nav class="hidden md:flex items-center space-x-1 bg-slate-800/60 p-1.5 rounded-xl border border-slate-700/50">
+                    <button onclick="switchTab('youtube')" id="tab-btn-youtube" class="nav-tab active-tab flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all">
+                        <i class="fa-brands fa-youtube text-red-500"></i>
+                        <span>YouTube Summarizer</span>
+                    </button>
+                    <button onclick="switchTab('pdf')" id="tab-btn-pdf" class="nav-tab flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium text-slate-400 hover:text-white transition-all">
+                        <i class="fa-solid fa-file-pdf text-amber-500"></i>
+                        <span>Syllabus Synthesizer</span>
+                    </button>
+                    <button onclick="switchTab('roadmap')" id="tab-btn-roadmap" class="nav-tab flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium text-slate-400 hover:text-white transition-all">
+                        <i class="fa-solid fa-route text-emerald-400"></i>
+                        <span>Learning Roadmap</span>
+                    </button>
+                    <button onclick="switchTab('timer')" id="tab-btn-timer" class="nav-tab flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium text-slate-400 hover:text-white transition-all">
+                        <i class="fa-solid fa-clock text-indigo-400"></i>
+                        <span>Focus Timer</span>
+                    </button>
+                </nav>
+
+                <!-- System Badge & Status -->
+                <div class="flex items-center space-x-3">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 mr-2 animate-ping"></span>
+                        Gemini 2.5 Active
+                    </span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- ================= TOOL 1: YOUTUBE SUMMARIZER ================= -->
+        <section id="section-youtube" class="tool-section active-section space-y-6">
+            <div class="bg-cardbg border border-slate-800 rounded-2xl p-6 shadow-xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 -mt-4 -mr-4 w-32 h-32 bg-red-500/10 rounded-full blur-2xl pointer-events-none"></div>
+                <h2 class="text-2xl font-bold text-white mb-2 font-['Outfit'] flex items-center">
+                    <i class="fa-brands fa-youtube text-red-500 mr-3"></i> YouTube Video Intelligence Engine
+                </h2>
+                <p class="text-slate-400 text-sm mb-6">Extract transcripts, timestamped notes, concepts, and auto-generated quizzes from any academic video.</p>
+                
+                <form id="youtube-form" onsubmit="handleYouTubeSubmit(event)" class="flex flex-col sm:flex-row gap-3">
+                    <div class="relative flex-grow">
+                        <i class="fa-solid fa-link absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"></i>
+                        <input type="text" id="yt-url-input" required placeholder="Paste YouTube Video URL (e.g., https://www.youtube.com/watch?v=...)" class="w-full bg-slate-900 border border-slate-700/80 rounded-xl pl-11 pr-4 py-3.5 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all text-sm">
+                    </div>
+                    <button type="submit" id="yt-submit-btn" class="bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-semibold px-6 py-3.5 rounded-xl transition-all shadow-lg shadow-brand-500/25 flex items-center justify-center space-x-2 shrink-0">
+                        <i class="fa-solid fa-bolt"></i>
+                        <span>Analyze Video</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- YouTube Output Container -->
+            <div id="yt-output-container" class="hidden space-y-6">
+                <!-- Video Overview Card -->
+                <div class="bg-cardbg border border-slate-800 rounded-2xl p-6 shadow-lg">
+                    <h3 class="text-lg font-semibold text-white mb-3 flex items-center">
+                        <i class="fa-solid fa-file-lines text-brand-500 mr-2"></i> Executive Summary
+                    </h3>
+                    <p id="yt-executive-summary" class="text-slate-300 text-sm leading-relaxed"></p>
+                </div>
+
+                <!-- Split Grid: Key Concepts & Takeaways -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-cardbg border border-slate-800 rounded-2xl p-6 shadow-lg">
+                        <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
+                            <i class="fa-solid fa-lightbulb text-amber-400 mr-2"></i> Key Takeaways
+                        </h3>
+                        <ul id="yt-takeaways-list" class="space-y-2.5 text-sm text-slate-300"></ul>
+                    </div>
+
+                    <div class="bg-cardbg border border-slate-800 rounded-2xl p-6 shadow-lg">
+                        <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
+                            <i class="fa-solid fa-book-bookmark text-emerald-400 mr-2"></i> Core Terminology
+                        </h3>
+                        <div id="yt-concepts-container" class="space-y-3"></div>
+                    </div>
+                </div>
+
+                <!-- Structured Notes Section -->
+                <div class="bg-cardbg border border-slate-800 rounded-2xl p-6 shadow-lg">
+                    <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
+                        <i class="fa-solid fa-list-check text-indigo-400 mr-2"></i> Comprehensive Structured Notes
+                    </h3>
+                    <div id="yt-notes-content" class="prose prose-invert max-w-none text-slate-300 text-sm leading-relaxed"></div>
+                </div>
+
+                <!-- Interactive Quiz Module -->
+                <div class="bg-cardbg border border-slate-800 rounded-2xl p-6 shadow-lg">
+                    <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
+                        <i class="fa-solid fa-graduation-cap text-brand-500 mr-2"></i> Self-Assessment Quiz
+                    </h3>
+                    <div id="yt-quiz-container" class="space-y-6"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TOOL 2: PDF SYNTHESIZER ================= -->
+        <section id="section-pdf" class="tool-section hidden space-y-6">
+            <div class="bg-cardbg border border-slate-800 rounded-2xl p-6 shadow-xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 -mt-4 -mr-4 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl pointer-events-none"></div>
+                <h2 class="text-2xl font-bold text-white mb-2 font-['Outfit'] flex items-center">
+                    <i class="fa-solid fa-file-pdf text-amber-500 mr-3"></i> Multi-Modal PDF Syllabus & Document Synthesizer
+                </h2>
+                <p class="text-slate-400 text-sm mb-6">Upload textbooks, lecture slides, or papers to extract structured notes and ask context questions.</p>
+                
+                <form id="pdf-form" onsubmit="handlePDFSubmit(event)" class="space-y-4">
+                    <div id="pdf-drop-zone" class="border-2 border-dashed border-slate-700 hover:border-brand-500 rounded-2xl p-8 text-center bg-slate-900/50 cursor-pointer transition-all">
+                        <input type="file" id="pdf-file-input" accept=".pdf" class="hidden" onchange="updatePDFFileName(this)">
+                        <i class="fa-solid fa-cloud-arrow-up text-4xl text-brand-500 mb-3"></i>
+                        <p id="pdf-file-label" class="text-slate-300 font-medium text-sm">Click or drag & drop PDF document here</p>
+                        <p class="text-slate-500 text-xs mt-1">Maximum upload size: 15MB</p>
+                    </div>
+                    <button type="submit" id="pdf-submit-btn" class="w-full bg-gradient-to-r from-amber-600 to-brand-600 hover:from-amber-500 hover:to-brand-500 text-white font-semibold py-3.5 rounded-xl transition-all shadow-lg flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-gear"></i>
+                        <span>Process PDF Document</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- PDF Output Container -->
+            <div id="pdf-output-container" class="hidden space-y-6">
+                <!-- Document Meta Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="bg-cardbg border border-slate-800 p-4 rounded-xl text-center">
+                        <span class="block text-slate-400 text-xs">Total Pages</span>
+                        <span id="pdf-stat-pages" class="text-xl font-bold text-white">0</span>
+                    </div>
+                    <div class="bg-cardbg border border-slate-800 p-4 rounded-xl text-center">
+                        <span class="block text-slate-400 text-xs">Word Count</span>
+                        <span id="pdf-stat-words" class="text-xl font-bold text-emerald-400">0</span>
+                    </div>
+                    <div class="bg-cardbg border border-slate-800 p-4 rounded-xl text-center">
+                        <span class="block text-slate-400 text-xs">Est. Reading Time</span>
+                        <span id="pdf-stat-time" class="text-xl font-bold text-amber-400">0 min</span>
+                    </div>
+                    <div class="bg-cardbg border border-slate-800 p-4 rounded-xl text-center">
+                        <span class="block text-slate-400 text-xs">Status</span>
+                        <span class="text-xs font-bold text-brand-400 uppercase tracking-wider">Processed</span>
+                    </div>
+                </div>
+
+                <!-- PDF Notes and Interactive Q&A Tabs -->
+                <div class="bg-cardbg border border-slate-800 rounded-2xl p-6 shadow-lg">
+                    <h3 class="text-lg font-semibold text-white mb-4">Document Summary & Notes</h3>
+                    <div id="pdf-notes-content" class="text-slate-300 text-sm leading-relaxed prose prose-invert max-w-none"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TOOL 3: AI STUDY ROADMAP ================= -->
+        <section id="section-roadmap" class="tool-section hidden space-y-6">
+            <div class="bg-cardbg border border-slate-800 rounded-2xl p-6 shadow-xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 -mt-4 -mr-4 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none"></div>
+                <h2 class="text-2xl font-bold text-white mb-2 font-['Outfit'] flex items-center">
+                    <i class="fa-solid fa-route text-emerald-400 mr-3"></i> Adaptive AI Roadmap & Schedule Generator
+                </h2>
+                <p class="text-slate-400 text-sm mb-6">Build personalized daily learning plans with workload hours and milestone objectives.</p>
+
+                <form onsubmit="handleRoadmapSubmit(event)" class="space-y-4">
+    <input 
+        type="text" 
+        id="roadmap-subject" 
+        placeholder="e.g., Data Structures & Algorithms" 
+        class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-white" 
+        required 
+    />
+    <div class="grid grid-cols-2 gap-4">
+        <input 
+            type="number" 
+            id="roadmap-days" 
+            min="1" 
+            max="60" 
+            placeholder="Days (e.g. 7)" 
+            class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-white" 
+            required 
+        />
+        <input 
+            type="number" 
+            id="roadmap-hours" 
+            step="0.5" 
+            min="0.5" 
+            max="24" 
+            placeholder="Hours/day (e.g. 2.5)" 
+            class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-white" 
+            required 
+        />
+    </div>
+    <button type="submit" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-500 text-white rounded-xl text-xs font-semibold">
+        Generate Roadmap
+    </button>
+</form>
+            </div>
+
+            <!-- Roadmap Output Container -->
+            <div id="rm-output-container" class="hidden space-y-6">
+                <div id="rm-phases-wrapper" class="space-y-6"></div>
+            </div>
+        </section>
+
+        <!-- ================= TOOL 4: FOCUS POMODORO TIMER ================= -->
+        <section id="section-timer" class="tool-section hidden space-y-6">
+            <div class="max-w-2xl mx-auto bg-cardbg border border-slate-800 rounded-3xl p-8 shadow-2xl text-center relative overflow-hidden">
+                <div class="absolute top-0 right-0 -mt-6 -mr-6 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <h2 class="text-xl font-bold text-white mb-1 font-['Outfit']">Interactive Focus Session</h2>
+                <p class="text-slate-400 text-xs mb-8">Maintain deep focus using timed study cycles with productivity scoring.</p>
+
+                <!-- Timer Ring Display -->
+                <div class="relative w-64 h-64 mx-auto mb-8 flex items-center justify-center">
+                    <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="44" stroke="currentColor" stroke-width="6" class="text-slate-800" fill="transparent"></circle>
+                        <circle id="timer-progress-ring" cx="50" cy="50" r="44" stroke="currentColor" stroke-width="6" class="text-brand-500 transition-all duration-1000" fill="transparent" stroke-dasharray="276.46" stroke-dashoffset="0" stroke-linecap="round"></circle>
+                    </svg>
+                    <div class="absolute flex flex-col items-center">
+                        <span id="timer-display" class="text-5xl font-bold text-white font-mono tracking-tight">25:00</span>
+                        <span id="timer-mode-label" class="text-xs uppercase tracking-widest text-brand-400 mt-2 font-semibold">Focus Mode</span>
+                    </div>
+                </div>
+
+                <!-- Timer Control Buttons -->
+                <div class="flex items-center justify-center space-x-4">
+                    <button id="timer-start-btn" onclick="toggleTimer()" class="bg-brand-600 hover:bg-brand-500 text-white font-semibold px-8 py-3.5 rounded-xl shadow-lg shadow-brand-500/25 transition-all flex items-center space-x-2">
+                        <i id="timer-btn-icon" class="fa-solid fa-play"></i>
+                        <span id="timer-btn-text">Start Focus</span>
+                    </button>
+                    <button onclick="resetTimer()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 px-5 py-3.5 rounded-xl transition-all">
+                        <i class="fa-solid fa-rotate-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECTION: HOW TO USE ================= -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-10">
+    <div class="text-center mb-8">
+        <h2 class="text-2xl font-bold font-['Outfit'] text-white">How To Use EduPulse AI</h2>
+        <p class="text-slate-400 text-sm mt-1">Transform raw study material into structured knowledge in 3 quick steps.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-cardbg border border-slate-800/80 rounded-2xl p-6 relative overflow-hidden group hover:border-brand-500/50 transition-all">
+            <div class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-400 font-bold flex items-center justify-center mb-4 border border-brand-500/20 text-base">01</div>
+            <h3 class="text-base font-semibold text-white mb-2">Select Your Workspace Tool</h3>
+            <p class="text-slate-400 text-xs leading-relaxed">Choose between YouTube Summarizer, PDF Synthesizer, Lecture Simplifier, or the AI Study Roadmap depending on your study source.</p>
+        </div>
+
+        <div class="bg-cardbg border border-slate-800/80 rounded-2xl p-6 relative overflow-hidden group hover:border-purple-500/50 transition-all">
+            <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 font-bold flex items-center justify-center mb-4 border border-purple-500/20 text-base">02</div>
+            <h3 class="text-base font-semibold text-white mb-2">Provide Study Input</h3>
+            <p class="text-slate-400 text-xs leading-relaxed">Paste a YouTube URL, upload a textbook PDF, or drop messy lecture notes into the input prompt box.</p>
+        </div>
+
+        <div class="bg-cardbg border border-slate-800/80 rounded-2xl p-6 relative overflow-hidden group hover:border-emerald-500/50 transition-all">
+            <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 font-bold flex items-center justify-center mb-4 border border-emerald-500/20 text-base">03</div>
+            <h3 class="text-base font-semibold text-white mb-2">Analyze & Test Knowledge</h3>
+            <p class="text-slate-400 text-xs leading-relaxed">Review executive summaries, core concept breakdowns, generated study notes, and test yourself with auto-generated quizzes.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ================= SECTION: KEY FEATURES ================= -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-12">
+    <div class="text-center mb-8">
+        <h2 class="text-2xl font-bold font-['Outfit'] text-white">Platform Core Capabilities</h2>
+        <p class="text-slate-400 text-sm mt-1">Everything you need to accelerate comprehension and boost academic performance.</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-cardbg border border-slate-800 p-5 rounded-2xl space-y-3">
+            <div class="w-10 h-10 rounded-lg bg-red-500/10 text-red-400 flex items-center justify-center text-lg">
+                <i class="fa-brands fa-youtube"></i>
+            </div>
+            <h4 class="text-sm font-semibold text-white">Transcript Intelligence</h4>
+            <p class="text-slate-400 text-xs leading-relaxed">Extracts live transcripts, generates key takeaways, and crafts custom multi-choice quizzes instantly.</p>
+        </div>
+
+        <div class="bg-cardbg border border-slate-800 p-5 rounded-2xl space-y-3">
+            <div class="w-10 h-10 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center text-lg">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+            </div>
+            <h4 class="text-sm font-semibold text-white">Lecture Simplifier</h4>
+            <p class="text-slate-400 text-xs leading-relaxed">Converts confusing formulas, complex academic prose, and long readings into simple ELI5 explanations.</p>
+        </div>
+
+        <div class="bg-cardbg border border-slate-800 p-5 rounded-2xl space-y-3">
+            <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-lg">
+                <i class="fa-solid fa-route"></i>
+            </div>
+            <h4 class="text-sm font-semibold text-white">Adaptive Study Schedules</h4>
+            <p class="text-slate-400 text-xs leading-relaxed">Creates multi-day step-by-step study roadmaps based on available daily study hours and target deadlines.</p>
+        </div>
+
+        <div class="bg-cardbg border border-slate-800 p-5 rounded-2xl space-y-3">
+            <div class="w-10 h-10 rounded-lg bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-lg">
+                <i class="fa-solid fa-clock"></i>
+            </div>
+            <h4 class="text-sm font-semibold text-white">Focus Pomodoro Timer</h4>
+            <p class="text-slate-400 text-xs leading-relaxed">Maintains deep focus during study sprints with customizable study/rest timers and visual feedback.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ================= SECTION: TECH STACK ================= -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-12 pb-8">
+    <div class="bg-cardbg/60 border border-slate-800 rounded-2xl p-6">
+        <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-widest text-center mb-6">Powered By Next-Gen Technical Architecture</h3>
+        <div class="flex flex-wrap items-center justify-center gap-6 sm:gap-10 opacity-80">
+            <div class="flex items-center space-x-2 text-slate-300 font-medium text-xs">
+                <i class="fa-solid fa-bolt text-amber-400 text-sm"></i>
+                <span>FastAPI (Python 3.11)</span>
+            </div>
+            <div class="flex items-center space-x-2 text-slate-300 font-medium text-xs">
+                <i class="fa-solid fa-brain text-brand-400 text-sm"></i>
+                <span>Google Gemini API</span>
+            </div>
+            <div class="flex items-center space-x-2 text-slate-300 font-medium text-xs">
+                <i class="fa-brands fa-youtube text-red-500 text-sm"></i>
+                <span>YouTube Transcript API</span>
+            </div>
+            <div class="flex items-center space-x-2 text-slate-300 font-medium text-xs">
+                <i class="fa-brands fa-css3-alt text-sky-400 text-sm"></i>
+                <span>Tailwind CSS</span>
+            </div>
+            <div class="flex items-center space-x-2 text-slate-300 font-medium text-xs">
+                <i class="fa-brands fa-js text-amber-300 text-sm"></i>
+                <span>Async Vanilla JavaScript</span>
+            </div>
+        </div>
+    </div>
+</section>
+    </main>
+
+    <!-- Global Loading Overlay -->
+    <div id="global-loading" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex flex-col items-center justify-center space-y-4">
+        <div class="w-16 h-16 border-4 border-brand-500/20 border-t-brand-500 rounded-full animate-spin"></div>
+        <p id="loading-text" class="text-white font-medium text-sm animate-pulse">Analyzing educational material...</p>
+    </div>
+
+    <!-- Frontend Script Integrations -->
+    <script src="/static/js/app.js"></script>
+    <script src="/static/js/youtube.js"></script>
+    <script src="/static/js/pdf.js"></script>
+    <script src="/static/js/roadmap.js"></script>
+    <script src="/static/js/timer.js"></script>
+</body>
+</html>

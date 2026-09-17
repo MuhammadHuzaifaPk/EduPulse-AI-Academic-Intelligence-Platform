@@ -1,0 +1,82 @@
+/* ==========================================================================
+   EduPulse AI — Keyframe Animations & Transitions
+   ========================================================================== */
+
+/* Fade-In & Slide-Up Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Glowing Pulsation Animation */
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.6);
+  }
+}
+
+/* Soft Floating Effect */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* Spinner Rotation */
+@keyframes spinSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Utility Animation Classes */
+.animate-fade-in {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.glow-pulse {
+  animation: glowPulse 3s infinite ease-in-out;
+}
+
+.float-element {
+  animation: float 4s infinite ease-in-out;
+}
+
+.spin-slow {
+  animation: spinSlow 12s linear infinite;
+}
+
+/* Staggered Delay Helpers */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
